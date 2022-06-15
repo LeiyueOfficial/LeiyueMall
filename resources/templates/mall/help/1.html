@@ -1,0 +1,40 @@
+<!-- Copyright (c) 2019-2020 十三 all rights reserved. -->
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="mall/header::head-fragment('蕾悦商城-商品详情','detail')">
+</head>
+<style>
+    .tc {
+        text-align: center;
+    }
+</style>
+<body>
+<header th:replace="mall/header::header-fragment">
+
+</header>
+
+<div id="detail">
+    <!-- nav -->
+    <nav th:replace="mall/header::nav-fragment"></nav>
+
+    <div class="intro mt20 w clearfix">
+        <div style="  background-color:#fff; padding:20px 15px;">
+            <div class="tc" style="padding:8px;">
+                <h1>免责声明</h1>
+                <br>
+                <font class="f3"></font>
+            </div>
+            <span>免责声明 如因不可抗力或其他无法控制的原因造成网站销售系统崩溃或无法正常使用，从而导致网上交易无法完成或丢失有关的信息、记录等，网站将不承担责任。但是我们将会尽合理的可能协助处理善后事宜，并努力使客户减少可能遭受的经济损失。 本 店可以按买方的要求代办相关运输手续，但我们的责任义务仅限于按时发货，遇到物流（邮政）意外时协助买方查询，不承担任何物流（邮政）提供给顾客之外的赔 偿，一切查询索赔事宜均按照物流（邮政）的规定办理。在物流（邮政）全程查询期限未满之前，买方不得要求赔偿。提醒买方一定核实好收货详细地址和收货人电 话，以免耽误投递。凡在本店购物，均视为如同意此声明。 客户监督 我们希望通过不懈努力，为客户提供最佳服务，我们在给客户提供服务的全程中接受客户的监督。 争议处理 如果客户与网站之间发生任何争议，可依据当时双方所认定的协议或相关法律来解决。</span>                           <div style="padding:8px; margin-top:15px; text-align:left; border-top:1px solid #ccc;">
+        </div>
+        </div>
+    </div>
+</div>
+
+<div th:replace="mall/footer::footer-fragment"></div>
+
+<!-- jQuery -->
+<script th:src="@{/admin/plugins/jquery/jquery.min.js}"></script>
+<script th:src="@{/admin/plugins/sweetalert/sweetalert.min.js}"></script>
+<script th:src="@{/mall/js/search.js}" type="text/javascript"></script>
+</body>
+</html>

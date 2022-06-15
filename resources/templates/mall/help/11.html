@@ -1,0 +1,171 @@
+<!-- Copyright (c) 2019-2020 十三 all rights reserved. -->
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="mall/header::head-fragment('蕾悦商城-商品详情','detail')">
+</head>
+<style>
+    .tc {
+        text-align: center;
+    }
+    pre {
+        white-space: pre-wrap; /* css-3 */
+        white-space: -moz-pre-wrap; /* Mozilla, since 1999 */
+        white-space: -pre-wrap; /* Opera 4-6 */
+        white-space: -o-pre-wrap; /* Opera 7 */
+        word-wrap: break-word; /* Internet Explorer 5.5+ */
+    }
+</style>
+<body>
+<header th:replace="mall/header::header-fragment">
+
+</header>
+
+<div id="detail">
+    <!-- nav -->
+    <nav th:replace="mall/header::nav-fragment"></nav>
+
+    <div class="intro mt20 w clearfix">
+        <div style="  background-color:#fff; padding:20px 15px;">
+            <div class="tc" style="padding:8px;">
+                <h1>人才招聘</h1>
+                <br>
+                <font class="f3"></font>
+            </div>
+            <pre style="padding:20px">
+招聘客服：
+岗位职责
+1、为客户解答公司业务问题，长期做好客户关系维护；
+2、负责客户的日常维护，为客户提供咨询服务；
+3、为客户提供工作数据报告等；
+4、负责客户的续费及快速响应客户各种紧急问题需求，为客户解决各种问题。
+任职资格
+1、具有中专以上学历；
+2、有1年以上相关经验；
+3、善于沟通，具有一定的抗压能力；
+4、熟练操作office软件；
+5、吃苦耐劳，具有良好的服务意识和团队协作精神。
+
+
+招聘营运经理：
+
+岗位职责：
+1、整合公司产品资源，落实呈现合作营销策略；
+2、配合公司产品事宜，提供营销传播方面的策划支持；
+3、通过竞品研究等手法分析产品优势和营销模式，挖掘特色资源和创新营销模式；
+4、根据公司业务需求完成策划及文案类支持工作；
+任职要求：
+1、熟悉互联网营销，具备3年广告公司/互联网广告营销相关策划经验；
+2、有成熟案例和对多个或单一行业的营销经验；
+3、本科及以上学历，广告学、市场营销、新闻传播等相关专业优先；
+招聘物流库房管理：
+任职要求：
+1、做好库房物资的进、销、存及账务处理；
+2、做好库房物资的防护和管理；
+3、根据要求，做好生产任务的物资需求分析，制定合理的物资采购计划；
+4、完成部门交办的临时事项。
+岗位职责：
+1、年龄28~35岁，大专及以上学历；
+2、有库房工作经历，或具有统计/会计相关知识优先；
+3、熟悉仓库管理流程及作业；
+4、工作主动性、配合性强；
+5、能吃苦耐劳，踏实肯干，服从工作安排。
+            </pre>
+
+        </div>
+        </div>
+    </div>
+</div>
+
+<div th:replace="mall/footer::footer-fragment"></div>
+
+<!-- jQuery -->
+<script th:src="@{/admin/plugins/jquery/jquery.min.js}"></script>
+<script th:src="@{/admin/plugins/sweetalert/sweetalert.min.js}"></script>
+<script th:src="@{/mall/js/search.js}" type="text/javascript"></script>
+<script type="text/javascript">
+    /**
+     * 添加到购物车
+     */
+    function saveToCart(id) {
+        var goodsCount = 1;
+        var data = {
+            "goodsId": id,
+            "goodsCount": goodsCount
+        };
+        $.ajax({
+            type: 'POST',
+            url: '/shop-cart',
+            contentType: 'application/json',
+            data: JSON.stringify(data),
+            success: function (result) {
+                if (result.resultCode == 200) {
+                    swal({
+                        title: "添加成功",
+                        text: "确认框",
+                        icon: "success",
+                        buttons: true,
+                        dangerMode: true,
+                    }).then((flag) => {
+                            window.location.reload();
+                        }
+                    );
+                } else {
+                    swal(result.message, {
+                        icon: "error",
+                    });
+                }
+            },
+            error: function () {
+                swal("操作失败", {
+                    icon: "error",
+                });
+            }
+        });
+    }
+
+    /**
+     * 添加到购物车并跳转至购物车页面
+     */
+    function saveAndGoCart(id) {
+        var goodsCount = 1;
+        var data = {
+            "goodsId": id,
+            "goodsCount": goodsCount
+        };
+        $.ajax({
+            type: 'POST',
+            url: '/shop-cart',
+            contentType: 'application/json',
+            data: JSON.stringify(data),
+            success: function (result) {
+                if (result.resultCode == 200) {
+                    swal({
+                        title: "已将商品加入购物车",
+                        icon: "success",
+                        buttons: {
+                            cancel: "留在当前页",
+                            confirm: "去购物车结算"
+                        },
+                        dangerMode: false,
+                    }).then((flag) => {
+                            if (flag) {
+                                window.location.href = '/shop-cart';
+                            }
+                        }
+                    );
+                } else {
+                    swal(result.message, {
+                        icon: "error",
+                    });
+                }
+            },
+            error: function () {
+                swal("操作失败", {
+                    icon: "error",
+                });
+            }
+        });
+    }
+</script>
+</body>
+</html>

@@ -1,0 +1,172 @@
+<!-- Copyright (c) 2019-2020 十三 all rights reserved. -->
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="mall/header::head-fragment('蕾悦商城-商品详情','detail')">
+</head>
+<style>
+    .tc {
+        text-align: center;
+    }
+    pre {
+        white-space: pre-wrap; /* css-3 */
+        white-space: -moz-pre-wrap; /* Mozilla, since 1999 */
+        white-space: -pre-wrap; /* Opera 4-6 */
+        white-space: -o-pre-wrap; /* Opera 7 */
+        word-wrap: break-word; /* Internet Explorer 5.5+ */
+    }
+</style>
+<body>
+<header th:replace="mall/header::header-fragment">
+
+</header>
+
+<div id="detail">
+    <!-- nav -->
+    <nav th:replace="mall/header::nav-fragment"></nav>
+
+    <div class="intro mt20 w clearfix">
+        <div style="  background-color:#fff; padding:20px 15px;">
+            <div class="tc" style="padding:8px;">
+                <h1>退换原则</h1>
+                <br>
+                <font class="f3"></font>
+            </div>
+            <pre style="padding:20px">
+一、 退货流程
+
+  本店为您提供了网上申请退货的服务，您只需进入账户中心，联系在线客服办理退换货。
+
+二、 退货范围及周期
+
+办理方式：快递寄回办理退货
+退货范围：所有经客服退货确认的订单
+办理周期：预计2个工作日(自本店收到退货包裹直至退货包裹处理完毕)
+
+*注：退货商品寄回后均会进行鉴定，鉴定师确定无损后，我们会全款退还给购买者。
+
+三、退货邮寄地址
+
+退货地址、退货电话、等退货信息：点击联系我们获取、或者在线客服获取
+
+温馨提示 ：
+
+1.如在未经客服同意退货申请的情况下，直接将商品寄回网站，网站不承担保管、重新发货、退款责任，必要时网站有权处置滞留商品。
+
+2.因本店原因产生的退换货邮寄费用由本店承担，邮寄退货完成后请联系客服办理，邮寄费用不含保价费用。
+
+3.本店的部分商品是由与本店签约的厂家提供的，商家商品的退换货地址请以商家提供的信息为准。
+
+四、 查询退货处理进程
+
+1.联系在线客服查询，或者致电全国服务热线查询。
+
+
+五、 退货时的注意事项
+
+1.快递/邮寄/物流、时请认真填写您的姓名、收货地址、订单号、商品名称、型号、退/换货原因等信息，否则将影响您的退货办理。
+
+2.如需检验报告的商品,您还需要提供检验报告。
+
+3.请您在收到商品7天内联系客服申请退货，否则将会影响您的退货办理。
+
+4.厂家退货申请将由对应商户处理，退货请邮寄至厂家。
+            </pre>
+
+        </div>
+        </div>
+    </div>
+</div>
+
+<div th:replace="mall/footer::footer-fragment"></div>
+
+<!-- jQuery -->
+<script th:src="@{/admin/plugins/jquery/jquery.min.js}"></script>
+<script th:src="@{/admin/plugins/sweetalert/sweetalert.min.js}"></script>
+<script th:src="@{/mall/js/search.js}" type="text/javascript"></script>
+<script type="text/javascript">
+    /**
+     * 添加到购物车
+     */
+    function saveToCart(id) {
+        var goodsCount = 1;
+        var data = {
+            "goodsId": id,
+            "goodsCount": goodsCount
+        };
+        $.ajax({
+            type: 'POST',
+            url: '/shop-cart',
+            contentType: 'application/json',
+            data: JSON.stringify(data),
+            success: function (result) {
+                if (result.resultCode == 200) {
+                    swal({
+                        title: "添加成功",
+                        text: "确认框",
+                        icon: "success",
+                        buttons: true,
+                        dangerMode: true,
+                    }).then((flag) => {
+                            window.location.reload();
+                        }
+                    );
+                } else {
+                    swal(result.message, {
+                        icon: "error",
+                    });
+                }
+            },
+            error: function () {
+                swal("操作失败", {
+                    icon: "error",
+                });
+            }
+        });
+    }
+
+    /**
+     * 添加到购物车并跳转至购物车页面
+     */
+    function saveAndGoCart(id) {
+        var goodsCount = 1;
+        var data = {
+            "goodsId": id,
+            "goodsCount": goodsCount
+        };
+        $.ajax({
+            type: 'POST',
+            url: '/shop-cart',
+            contentType: 'application/json',
+            data: JSON.stringify(data),
+            success: function (result) {
+                if (result.resultCode == 200) {
+                    swal({
+                        title: "已将商品加入购物车",
+                        icon: "success",
+                        buttons: {
+                            cancel: "留在当前页",
+                            confirm: "去购物车结算"
+                        },
+                        dangerMode: false,
+                    }).then((flag) => {
+                            if (flag) {
+                                window.location.href = '/shop-cart';
+                            }
+                        }
+                    );
+                } else {
+                    swal(result.message, {
+                        icon: "error",
+                    });
+                }
+            },
+            error: function () {
+                swal("操作失败", {
+                    icon: "error",
+                });
+            }
+        });
+    }
+</script>
+</body>
+</html>

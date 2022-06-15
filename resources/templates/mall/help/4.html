@@ -1,0 +1,146 @@
+<!-- Copyright (c) 2019-2020 十三 all rights reserved. -->
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="mall/header::head-fragment('蕾悦商城-商品详情','detail')">
+</head>
+<style>
+    .tc {
+        text-align: center;
+    }
+    pre {
+        white-space: pre-wrap; /* css-3 */
+        white-space: -moz-pre-wrap; /* Mozilla, since 1999 */
+        white-space: -pre-wrap; /* Opera 4-6 */
+        white-space: -o-pre-wrap; /* Opera 7 */
+        word-wrap: break-word; /* Internet Explorer 5.5+ */
+    }
+</style>
+<body>
+<header th:replace="mall/header::header-fragment">
+
+</header>
+
+<div id="detail">
+    <!-- nav -->
+    <nav th:replace="mall/header::nav-fragment"></nav>
+
+    <div class="intro mt20 w clearfix">
+        <div style="  background-color:#fff; padding:20px 15px;">
+            <div class="tc" style="padding:8px;">
+                <h1>商品质保</h1>
+                <br>
+                <font class="f3"></font>
+            </div>
+            <pre style="padding:20px">
+   如今网购已成为一种不可替代购物的方式，此时很多网购族就担心到商品的质量保证问题，目前确实很多网购族买到一些低劣产品，以次充好的产品，伪劣产品，确实让人担忧，以至网购族们有所顾忌。
+
+本店声明
+    本店向全国人民郑重承诺，绝不卖来源不明商品，质量不达标产品，绝不卖以次充好产品，做良心商家，服务全国人民，如果发现本店销售以上产品，欢迎监督举报。
+
+
+货源监督
+    本店销售该产品就责任对该产品的出处进行了解，并且深入了解该产品的全部生产以及进货流程，做良心卖家，让买家真正放心购物，无后顾之忧。
+
+质量保证
+    对于商品质量保障问题说明，我们会与生成加工厂签署正式的质量保证合同，每批次进货我们将分配专属的采购员，物流跟踪员，商品验收员进行多层次的质量监督，确保万无一失，在本店购买的产品出现任何非买方人为照成的损失以外，我们将负责到底，让买家无任何后顾之忧。
+
+            </pre>
+
+        </div>
+        </div>
+    </div>
+</div>
+
+<div th:replace="mall/footer::footer-fragment"></div>
+
+<!-- jQuery -->
+<script th:src="@{/admin/plugins/jquery/jquery.min.js}"></script>
+<script th:src="@{/admin/plugins/sweetalert/sweetalert.min.js}"></script>
+<script th:src="@{/mall/js/search.js}" type="text/javascript"></script>
+<script type="text/javascript">
+    /**
+     * 添加到购物车
+     */
+    function saveToCart(id) {
+        var goodsCount = 1;
+        var data = {
+            "goodsId": id,
+            "goodsCount": goodsCount
+        };
+        $.ajax({
+            type: 'POST',
+            url: '/shop-cart',
+            contentType: 'application/json',
+            data: JSON.stringify(data),
+            success: function (result) {
+                if (result.resultCode == 200) {
+                    swal({
+                        title: "添加成功",
+                        text: "确认框",
+                        icon: "success",
+                        buttons: true,
+                        dangerMode: true,
+                    }).then((flag) => {
+                            window.location.reload();
+                        }
+                    );
+                } else {
+                    swal(result.message, {
+                        icon: "error",
+                    });
+                }
+            },
+            error: function () {
+                swal("操作失败", {
+                    icon: "error",
+                });
+            }
+        });
+    }
+
+    /**
+     * 添加到购物车并跳转至购物车页面
+     */
+    function saveAndGoCart(id) {
+        var goodsCount = 1;
+        var data = {
+            "goodsId": id,
+            "goodsCount": goodsCount
+        };
+        $.ajax({
+            type: 'POST',
+            url: '/shop-cart',
+            contentType: 'application/json',
+            data: JSON.stringify(data),
+            success: function (result) {
+                if (result.resultCode == 200) {
+                    swal({
+                        title: "已将商品加入购物车",
+                        icon: "success",
+                        buttons: {
+                            cancel: "留在当前页",
+                            confirm: "去购物车结算"
+                        },
+                        dangerMode: false,
+                    }).then((flag) => {
+                            if (flag) {
+                                window.location.href = '/shop-cart';
+                            }
+                        }
+                    );
+                } else {
+                    swal(result.message, {
+                        icon: "error",
+                    });
+                }
+            },
+            error: function () {
+                swal("操作失败", {
+                    icon: "error",
+                });
+            }
+        });
+    }
+</script>
+</body>
+</html>

@@ -1,0 +1,172 @@
+<!-- Copyright (c) 2019-2020 十三 all rights reserved. -->
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="mall/header::head-fragment('蕾悦商城-商品详情','detail')">
+</head>
+<style>
+    .tc {
+        text-align: center;
+    }
+    pre {
+        white-space: pre-wrap; /* css-3 */
+        white-space: -moz-pre-wrap; /* Mozilla, since 1999 */
+        white-space: -pre-wrap; /* Opera 4-6 */
+        white-space: -o-pre-wrap; /* Opera 7 */
+        word-wrap: break-word; /* Internet Explorer 5.5+ */
+    }
+</style>
+<body>
+<header th:replace="mall/header::header-fragment">
+
+</header>
+
+<div id="detail">
+    <!-- nav -->
+    <nav th:replace="mall/header::nav-fragment"></nav>
+
+    <div class="intro mt20 w clearfix">
+        <div style="  background-color:#fff; padding:20px 15px;">
+            <div class="tc" style="padding:8px;">
+                <h1>关于我们</h1>
+                <br>
+                <font class="f3"></font>
+            </div>
+            <pre style="padding:20px">
+企业宗旨：精益求精，追求卓越
+
+“精益求精”是一种永不妥协 、一种超越自我的精神，只有不断走在时代前列，不断众志成城追求卓越，企业才能有永远的生命力。
+
+企业精神：团结、拼搏、开拓、进取
+
+经营理念：德为先，诚为尚，和为贵
+
+企业目标：向着国际化一流企业奋斗
+
+
+       在日益激烈的市场竞争中，我方的战略目标是成为一个有规模的、可持续发展的世界一流的企业，通过这一载体，研发成果能够源源不断地、迅速有效地转化为现实的生产力。创建世界一流企业的战略目标里，渗透着一种"高标定位"的战略理念。引入高标定位的战略理念为我公司超越自身、追求卓越树立起了明确的发展目标。
+
+企业哲学：质量第一，服务至上
+
+以质量求生存，在目前的中国市场上，企业的竞争就是服务和质量的竞争，加强服务，提高质量，在行业中拥有信誉和知名度，才能在竞争中生存和发展。
+
+企业道德：外树诚信形象  内育职业忠诚
+
+
+“做诚信的人，说诚信的话，干诚信的事”， 用诚信之魂打造良好的企业形象，这是企业参与市场竞争的最根本实力，也是企业持续发展的巨大潜力。企业形象奠定了丰厚的诚信文化底蕴，而诚信文化底蕴则铸就了我方优秀的企业形象。
+
+企业前景
+
+目标：通过市场、管理、资源的创新整合，构建顾客忠诚的品牌与市场网络体系，实现利润回报、顾客忠诚、管理潜能、创新学习的同步提升
+
+方针：管理规范化，服务网络化，发展品牌化。
+
+服务网络化，是指从以技术、生产、个人营销为核心的市场体系，转化成为以终端服务、快速响应、品牌忠诚为核心的市场网络，为公司相关业务拓展提供市场进入通道。
+
+发展品牌化，是指充分重视技术开发产品质量、配送便捷、终端服务、积极利用公司已有资源，使更多地转化为集团的品牌优势，以提高公司产品最终顾客的忠诚度。
+
+措施：“三个一切”，即联合一切可以联合的力量，利用一切可以利用的资源，调动一切可以调动的积极因素。
+
+实施：“三个一切”，需要以“三个必须”为前提，即要想联合，必须拥有；要想利用必须付出；要想调动，必须善待。
+
+具体以“三个围绕”确保“三个一切”。即围绕发展企业生产力，联合一切可以联合的力量，打牢企业发展的实力基础 ；围绕提高员工素质，调动其积极因素，打牢企业发展的智力基础；围绕为社会做贡献，利用一切可以利用的资源，打牢企业发展的资源基础。
+
+            </pre>
+
+        </div>
+        </div>
+    </div>
+</div>
+
+<div th:replace="mall/footer::footer-fragment"></div>
+
+<!-- jQuery -->
+<script th:src="@{/admin/plugins/jquery/jquery.min.js}"></script>
+<script th:src="@{/admin/plugins/sweetalert/sweetalert.min.js}"></script>
+<script th:src="@{/mall/js/search.js}" type="text/javascript"></script>
+<script type="text/javascript">
+    /**
+     * 添加到购物车
+     */
+    function saveToCart(id) {
+        var goodsCount = 1;
+        var data = {
+            "goodsId": id,
+            "goodsCount": goodsCount
+        };
+        $.ajax({
+            type: 'POST',
+            url: '/shop-cart',
+            contentType: 'application/json',
+            data: JSON.stringify(data),
+            success: function (result) {
+                if (result.resultCode == 200) {
+                    swal({
+                        title: "添加成功",
+                        text: "确认框",
+                        icon: "success",
+                        buttons: true,
+                        dangerMode: true,
+                    }).then((flag) => {
+                            window.location.reload();
+                        }
+                    );
+                } else {
+                    swal(result.message, {
+                        icon: "error",
+                    });
+                }
+            },
+            error: function () {
+                swal("操作失败", {
+                    icon: "error",
+                });
+            }
+        });
+    }
+
+    /**
+     * 添加到购物车并跳转至购物车页面
+     */
+    function saveAndGoCart(id) {
+        var goodsCount = 1;
+        var data = {
+            "goodsId": id,
+            "goodsCount": goodsCount
+        };
+        $.ajax({
+            type: 'POST',
+            url: '/shop-cart',
+            contentType: 'application/json',
+            data: JSON.stringify(data),
+            success: function (result) {
+                if (result.resultCode == 200) {
+                    swal({
+                        title: "已将商品加入购物车",
+                        icon: "success",
+                        buttons: {
+                            cancel: "留在当前页",
+                            confirm: "去购物车结算"
+                        },
+                        dangerMode: false,
+                    }).then((flag) => {
+                            if (flag) {
+                                window.location.href = '/shop-cart';
+                            }
+                        }
+                    );
+                } else {
+                    swal(result.message, {
+                        icon: "error",
+                    });
+                }
+            },
+            error: function () {
+                swal("操作失败", {
+                    icon: "error",
+                });
+            }
+        });
+    }
+</script>
+</body>
+</html>

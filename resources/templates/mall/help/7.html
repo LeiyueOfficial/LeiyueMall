@@ -1,0 +1,175 @@
+<!-- Copyright (c) 2019-2020 十三 all rights reserved. -->
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="mall/header::head-fragment('蕾悦商城-商品详情','detail')">
+</head>
+<style>
+    .tc {
+        text-align: center;
+    }
+    pre {
+        white-space: pre-wrap; /* css-3 */
+        white-space: -moz-pre-wrap; /* Mozilla, since 1999 */
+        white-space: -pre-wrap; /* Opera 4-6 */
+        white-space: -o-pre-wrap; /* Opera 7 */
+        word-wrap: break-word; /* Internet Explorer 5.5+ */
+    }
+</style>
+<body>
+<header th:replace="mall/header::header-fragment">
+
+</header>
+
+<div id="detail">
+    <!-- nav -->
+    <nav th:replace="mall/header::nav-fragment"></nav>
+
+    <div class="intro mt20 w clearfix">
+        <div style="  background-color:#fff; padding:20px 15px;">
+            <div class="tc" style="padding:8px;">
+                <h1>售后服务</h1>
+                <br>
+                <font class="f3"></font>
+            </div>
+            <pre style="padding:20px">
+本站承诺自商品签收15日内，如有符合基本换货规则的前提下，均可申请退换货，具体按以下退换货规则为准。
+
+换货规则（符合以下条件，可以申请换货）
+
+( 1） 收到货物时当面在送货员面前拆包检查，发现货物有质量问题的。
+
+( 2） 收到货物时当面在送货员面前拆包检查，发现货物与订购种类不符的。
+
+( 3） 收到货物时当面在送货员面前拆包检查，发现实际货物与网站上描述有较大出入的。
+
+退货规则（符合以下条件，可以申请退货）
+
+( 1） 收到货物时当面在送货员面前拆包检查，发现货物存在明显质量问题的。
+
+( 2） 货物经过一次换货但仍然存在质量或实际货物与网站描述出入较大问题的。
+
+( 3） 由于本站原因造成超过我们承诺到货之日7天还没收到货物。
+
+以下情况不予办理退换货
+
+( 1） 任何非买本站出售的商品。
+
+( 2） 任何因买家保管导致出现质量问题的商品。
+
+( 3） 超过退换货期限的退换货要求。
+
+( 4） 如有赠品的商品，赠品不能随商品一并退回的。
+
+( 5） 客户发货单据或发票丢失或者不全。
+
+( 6） 特别活动注明不退换货的商品不在退换货服务内。
+
+特别说明
+
+( 1） 如要申请退换货，请于货品签收日算起15日内向本站客服申请，逾期不予受理。
+
+( 2） 使用优惠券或参加满返活动等优惠购买商品发生退换，按您所支付的实际金额进行比例换算，再进行退换货结算，如原订购的商品缺货，经与买家沟通后按同等价值商品进行调换。
+
+( 3） 如果是由于商品质量问题或货品种类与订单不符造成的换货，邮费由本站承担。
+
+( 4） 如仍有疑问详情可咨询本站在线客服或电话客服
+            </pre>
+
+        </div>
+        </div>
+    </div>
+</div>
+
+<div th:replace="mall/footer::footer-fragment"></div>
+
+<!-- jQuery -->
+<script th:src="@{/admin/plugins/jquery/jquery.min.js}"></script>
+<script th:src="@{/admin/plugins/sweetalert/sweetalert.min.js}"></script>
+<script th:src="@{/mall/js/search.js}" type="text/javascript"></script>
+<script type="text/javascript">
+    /**
+     * 添加到购物车
+     */
+    function saveToCart(id) {
+        var goodsCount = 1;
+        var data = {
+            "goodsId": id,
+            "goodsCount": goodsCount
+        };
+        $.ajax({
+            type: 'POST',
+            url: '/shop-cart',
+            contentType: 'application/json',
+            data: JSON.stringify(data),
+            success: function (result) {
+                if (result.resultCode == 200) {
+                    swal({
+                        title: "添加成功",
+                        text: "确认框",
+                        icon: "success",
+                        buttons: true,
+                        dangerMode: true,
+                    }).then((flag) => {
+                            window.location.reload();
+                        }
+                    );
+                } else {
+                    swal(result.message, {
+                        icon: "error",
+                    });
+                }
+            },
+            error: function () {
+                swal("操作失败", {
+                    icon: "error",
+                });
+            }
+        });
+    }
+
+    /**
+     * 添加到购物车并跳转至购物车页面
+     */
+    function saveAndGoCart(id) {
+        var goodsCount = 1;
+        var data = {
+            "goodsId": id,
+            "goodsCount": goodsCount
+        };
+        $.ajax({
+            type: 'POST',
+            url: '/shop-cart',
+            contentType: 'application/json',
+            data: JSON.stringify(data),
+            success: function (result) {
+                if (result.resultCode == 200) {
+                    swal({
+                        title: "已将商品加入购物车",
+                        icon: "success",
+                        buttons: {
+                            cancel: "留在当前页",
+                            confirm: "去购物车结算"
+                        },
+                        dangerMode: false,
+                    }).then((flag) => {
+                            if (flag) {
+                                window.location.href = '/shop-cart';
+                            }
+                        }
+                    );
+                } else {
+                    swal(result.message, {
+                        icon: "error",
+                    });
+                }
+            },
+            error: function () {
+                swal("操作失败", {
+                    icon: "error",
+                });
+            }
+        });
+    }
+</script>
+</body>
+</html>
